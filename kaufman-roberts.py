@@ -44,15 +44,20 @@ def calculate_p():
         for j in range(C + 1):
             p.append(s[j]/sum)
 
-
-
-
-    # for i in range(len(s)):
-    #     print(s[i])
-
-
-
-
+ei = []
+def calculate_e():
+    for i in range(m):
+        for j in range(0, len(p), C + 1):
+            e = 0
+            for n in range(C-t[i]+1, C + 1, 1):
+                e += p[n + j]
+            ei.append(e)
+    
+def print_e():
+    for i in range(len(ei)):
+        if(i == len(ei)//m):
+            print("i", i)
+        print(ei[i])
 def print_a():
     for j in range(len(a)):
         print(a[j])
@@ -75,3 +80,5 @@ def print_s():
 calculate_a()
 print_ai2()
 calculate_p()
+calculate_e()
+print_e()
