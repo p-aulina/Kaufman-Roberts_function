@@ -84,16 +84,18 @@ def clear_all():
     p.clear()
     ei.clear()
 
-def header():
-    with file_e.open(mode = "w") as file:
+def header(file_h):
+    with file_h.open(mode = "w") as file:
         file.write(f"# C = {C}\n")
         file.write("#\n")
         for i in range(m):
             file.write(f"#\tt[{i + 1}] = {t[i]}\n")
-        file.write("#\na\t\t")
-        for i in range(m):
-            file.write(f"t{i + 1} \t\t\t\t")
-        file.write("\n")
+        file.write("#\n")
+        if file_h == file_e:
+            file.write("a\t\t")
+            for i in range(m):
+                file.write(f"t{i + 1} \t\t\t\t")
+            file.write("\n")
 
 def write_blocking():
     with file_e.open(mode = "a") as file:
@@ -102,16 +104,26 @@ def write_blocking():
             file.write(f"{round(ei[i], 9)}\t\t")
         file.write("\n")
 
+def write_occupancy():
+    with file_p.open(mode = "a") as file:
+        file.write(f"\na = {a_min}\n")
+        file.write(f"n\t\tp[n]\n")
+        for i in range(C + 1):
+            file.write(f"{i}\t\t{p[i]}\n")
+        
+
 
 # ******************************************************************
 #                              [ MAIN ]
 # ******************************************************************
 file_exist(file_p)
 file_exist(file_e)
-header()
+header(file_e)
+header(file_p)
 while(a_min <= a_max):
     calculate_all()
     write_blocking()
+    write_occupancy()
     clear_all()
     a_min += a_step
     a_min = round(a_min, 1)
