@@ -16,7 +16,7 @@ This program requires following input data:
 - t - requests
 - m - class (number of request flows)
 
-**Code includes default values of system parameters**
+**Code includes default values of system parameters.**
 
 ## Saving output
 Output is written in .txt files that are created automatically after running the program:
