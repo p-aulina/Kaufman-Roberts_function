@@ -1,4 +1,16 @@
 # ******************************************************************
+#                        [ FILE MANAGEMENT ]
+# ******************************************************************
+from pathlib import Path
+
+file_p = Path("occupancy.txt")
+file_e = Path("blocking.txt")
+
+def file_exist(file):
+    if not file.exists():
+        file.touch()
+
+# ******************************************************************
 #                        [ INPUT PARAMETERS ]
 #
 #  a_min - minimum traffic offered per one unit of system capacity
@@ -94,6 +106,8 @@ def print_all():
 # ******************************************************************
 #                              [ MAIN ]
 # ******************************************************************
+file_exist(file_p)
+file_exist(file_e)
 header()
 while(a_min <= a_max):
     calculate_all()
