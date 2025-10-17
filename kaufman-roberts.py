@@ -85,22 +85,22 @@ def clear_all():
     ei.clear()
 
 def header():
-    print("#", "C =", C)
-    print("#")
-    for i in range(m):
-        print("# \t", "t[%i] =" % (i + 1), t[i])
-    print("#")
-    print("# \t", end="")
-    for i in range(m - 1):
-        print("t%i" % (i + 1), "\t \t \t", end="")
-    
-    print("t%i" % m)
+    with file_e.open(mode = "w") as file:
+        file.write(f"# C = {C}\n")
+        file.write("#\n")
+        for i in range(m):
+            file.write(f"#\tt[{i + 1}] = {t[i]}\n")
+        file.write("#\na\t\t")
+        for i in range(m):
+            file.write(f"t{i + 1} \t\t\t\t")
+        file.write("\n")
 
-def print_all():
-    print(a_min, end="\t")
-    for i in range(m):
-        print(ei[i], end = "\t")
-    print("")
+def write_blocking():
+    with file_e.open(mode = "a") as file:
+        file.write(f"{a_min}\t\t")
+        for i in range(m):
+            file.write(f"{round(ei[i], 9)}\t\t")
+        file.write("\n")
 
 
 # ******************************************************************
@@ -111,7 +111,7 @@ file_exist(file_e)
 header()
 while(a_min <= a_max):
     calculate_all()
-    print_all()
+    write_blocking()
     clear_all()
     a_min += a_step
     a_min = round(a_min, 1)
