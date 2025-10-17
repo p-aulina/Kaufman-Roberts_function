@@ -24,8 +24,8 @@ def file_exist(file):
 a_min = 0.2
 a_max = 1.3
 a_step = 0.1
-C = 4
-t = [1, 2]
+C = 10
+t = [1, 2, 3]
 m = len(t)
 
 
@@ -95,6 +95,9 @@ def clear_all():
     y.clear()
     ei.clear()
 
+col_t_width = 12
+col_a_width = 8
+
 def header(file_h):
     with file_h.open(mode = "w") as file:
         file.write(f"# C = {C}\n")
@@ -103,32 +106,38 @@ def header(file_h):
             file.write(f"#\tt[{i + 1}] = {t[i]}\n")
         file.write("#\n")
         if file_h == file_e:
-            file.write("a\t\t")
+            file.write(f"{'a':<{col_a_width}}")
             for i in range(m):
-                file.write(f"t{i + 1} \t\t\t\t")
+                file.write(f"t{i + 1:<{col_t_width}}")
             file.write("\n")
 
 def write_blocking():
     with file_e.open(mode = "a") as file:
-        file.write(f"{a_min}\t\t")
+        file.write(f"{a_min:<{col_a_width}}")
         for i in range(m):
-            file.write(f"{round(ei[i], 9)}\t\t")
+            file.write(f"{round(ei[i], 9):<{col_t_width + 1}}")
         file.write("\n")
 
 def write_occupancy():
     with file_p.open(mode = "a") as file:
         file.write(f"\na = {a_min}\n")
-        file.write(f"n\t\tp[n]\n")
+        file.write(f"{'n':<{col_a_width}}p[n]\n")
         for i in range(C + 1):
-            file.write(f"{i}\t\t{p[i]}\n")
+            file.write(f"{i:<{col_a_width}}{p[i]}\n")
 
-def write_requests():
+def write_requests():    
     with file_y.open(mode = "a") as file:
         file.write(f"\n{a_min}\n")
-        file.write("n\t\t")
+        file.write(f"{'n':<{col_a_width}}")
         for i in range(m):
-            file.write(f"t{i + 1}\t\t")
-        file.write(":\t\tsum")
+            file.write(f"t{i+1:<{col_t_width}}")
+        file.write(f"{':':<{col_a_width}}sum\n")
+
+        for n in range(0, C + 1):
+            file.write(f"{n:<{col_a_width}}")
+            for i in range(m):
+                file.write(f"{round(y[n*m + i], 7):<{col_t_width + 1}}")
+            file.write(f"{':':<{col_a_width}}{n}\n")
         
 
 
