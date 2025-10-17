@@ -1,5 +1,6 @@
 blocking.txt
 occupancy.txt
+requests.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

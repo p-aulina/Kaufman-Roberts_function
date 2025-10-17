@@ -5,6 +5,7 @@ from pathlib import Path
 
 file_p = Path("occupancy.txt")
 file_e = Path("blocking.txt")
+file_y = Path("requests.txt")
 
 def file_exist(file):
     if not file.exists():
@@ -69,6 +70,14 @@ def calculate_e():
             x += p[n]
         ei.append(x)
 
+y = []
+def calculate_y():
+    for n in range(0, C + 1):
+        for i in range(m):
+            if 0 <= n - t[i] <= C:
+                y.append(ai[i]*t[i]*p[n - t[i]]/p[n])
+            else:
+                y.append(0)
 
 # ******************************************************************
 #                        [ HELPER FUNCTIONS ]
@@ -76,12 +85,14 @@ def calculate_e():
 def calculate_all():
     calculate_a()
     calculate_p()
+    calculate_y()
     calculate_e()
 
 def clear_all():
     ai.clear()
     s.clear()
     p.clear()
+    y.clear()
     ei.clear()
 
 def header(file_h):
@@ -110,6 +121,14 @@ def write_occupancy():
         file.write(f"n\t\tp[n]\n")
         for i in range(C + 1):
             file.write(f"{i}\t\t{p[i]}\n")
+
+def write_requests():
+    with file_y.open(mode = "a") as file:
+        file.write(f"\n{a_min}\n")
+        file.write("n\t\t")
+        for i in range(m):
+            file.write(f"t{i + 1}\t\t")
+        file.write(":\t\tsum")
         
 
 
@@ -118,12 +137,15 @@ def write_occupancy():
 # ******************************************************************
 file_exist(file_p)
 file_exist(file_e)
+file_exist(file_y)
 header(file_e)
 header(file_p)
+header(file_y)
 while(a_min <= a_max):
     calculate_all()
     write_blocking()
     write_occupancy()
+    write_requests()
     clear_all()
     a_min += a_step
     a_min = round(a_min, 1)
