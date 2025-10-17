@@ -1,2 +1,3 @@
-# Kaufman-Roberts_function
-Computing blocking probability and occupancy probability distribution in a fully accessible system with multi-service traffic.
+# Kaufman-Roberts function
+## Computing blocking probability, occupancy probability distribution and average number of requests per occupation state in a fully accessible system with multi-service traffic.
+
