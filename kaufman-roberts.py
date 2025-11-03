@@ -108,6 +108,12 @@ col_a_width = 8
 
 def header(file_h):
     with file_h.open(mode = "w") as file:
+        if file_h == file_e:
+            file.write("BLOCKING PROBABILITY\n")
+        elif file_h == file_p:
+            file.write("OCCUPANCY PROBABILITY DISTRIBUTION\n")
+        elif file_h == file_y:
+            file.write("AVERAGE NUMBER OF REQUESTS\n")
         file.write(f"# C = {C}\n")
         file.write("#\n")
         for i in range(m):
